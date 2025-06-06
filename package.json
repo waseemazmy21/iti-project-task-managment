@@ -1,0 +1,38 @@
+{
+  "name": "iti-project-task-managment",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "nodemon src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/waseemazmy21/iti-project-task-managment.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/waseemazmy21/iti-project-task-managment/issues"
+  },
+  "homepage": "https://github.com/waseemazmy21/iti-project-task-managment#readme",
+  "description": "",
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "express-validator": "^7.2.1",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.15.1",
+    "swagger-ui-express": "^5.0.1"
+  },
+  "devDependencies": {
+    "eslint": "^9.28.0",
+    "eslint-config-prettier": "^10.1.5",
+    "eslint-plugin-prettier": "^5.4.1",
+    "nodemon": "^3.1.10",
+    "prettier": "^3.5.3"
+  }
+}
