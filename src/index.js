@@ -1,7 +1,7 @@
-import express from "express";
-import cors from "cors";
-import dotenv from "dotenv";
-import connectDB from "./config/db.js";
+import express from 'express';
+import cors from 'cors';
+import dotenv from 'dotenv';
+import connectDB from './config/db.js';
 
 dotenv.config();
 
@@ -21,7 +21,7 @@ const startServer = async () => {
       console.log(`[Server] is running on port ${PORT}`);
     });
   } catch (error) {
-    console.error("[Server] failed to start:", error);
+    console.error('[Server] failed to start:', error);
     process.exit(1);
   }
 };
@@ -30,6 +30,6 @@ const startServer = async () => {
   await startServer();
 })();
 
-app.get("/", (req, res) => {
-  res.send("hello world");
+app.get('/', (req, res) => {
+  res.send('hello world');
 });
