@@ -33,7 +33,7 @@ export const login = async (req, res) => {
     const user = await User.findOne({ email });
 
     if (!user || !(await user.comparePassword(password))) {
-      return res.status(401).json({ message: 'Wrong email or passowrd' });
+      return res.status(401).json({ message: 'Wrong email or password' });
     }
     const token = jwt.sign(
       { sub: user._id, role: user.role },

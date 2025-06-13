@@ -1,9 +1,29 @@
-import { Router } from 'express';
-import { createTask, deleteTask } from '../controllers/taskController.js';
+// import { Router } from 'express';
+// import { createTask, deleteTask } from '../controllers/taskController.js';
 
-const router = Router();
+// const router = Router();
 
-router.post('', createTask);
-router.get('/:id', deleteTask);
+// router.post('', createTask);
+// router.get('/:id', deleteTask);
 
-export default router;
+// export default router;
+
+import express from "express";
+import {
+  createTask,
+  deleteTask,
+  getTask,
+  getTasks,
+  updateTask,
+} from "../controllers/task.controller.js";
+import { authorizeRoles } from "../middleware/auth.middleware.js";
+
+const taskRouter = express.Router();
+
+taskRouter.post("/", authorizeRoles("admin", "user"), createTask);
+taskRouter.get("/", authorizeRoles("admin", "user"), getTasks);
+taskRouter.get("/:id", authorizeRoles("admin", "user"), getTask);
+taskRouter.patch("/:id", authorizeRoles("admin", "user"), updateTask);
+taskRouter.delete("/:id", authorizeRoles("admin", "user"), deleteTask);
+
+export default taskRouter;
