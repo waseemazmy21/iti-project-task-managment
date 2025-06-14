@@ -3,6 +3,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import connectDB from './config/db.js';
 import authRoutes from './routes/authRoutes.js';
+import searchTasksRoute from './routes/searchTaskRoute.js';
 
 dotenv.config();
 
@@ -15,6 +16,7 @@ app.use(cors());
 
 // ruotes
 app.use('/api/auth', authRoutes);
+app.use('/tasks/search', searchTasksRoute);
 
 const PORT = process.env.PORT || 8000;
 
