@@ -76,3 +76,85 @@ export const filterTasks = async (req, res) => {
     return res.status(500).json({ error: 'Internal server error' });
   }
 };
+
+// Get all tasks based on ROle
+
+export const getAllTasks = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const userRole = req.user.role;
+
+    let tasks;
+
+    if (userRole === 'admin') {
+      tasks = await Task.find();
+    } else {
+      tasks = await Task.find({ user: userId });
+    }
+
+    return res.status(200).json({
+      message: 'Tasks retrieved successfully',
+      retrievedTasks: tasks,
+    });
+  } catch (err) {
+    console.error(`Get All Tasks Error: ${err}`);
+    return res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
+export const getTaskById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const userId = req.user.id;
+    console.log(id);
+    console.log('userid', userId);
+    const task = await Task.findOne({
+      _id: id,
+      user: userId,
+    });
+    if (!task) {
+      return res
+        .status(404)
+        .json({ status: 'error', message: 'Task not found' });
+    }
+    res.json({ status: 'success', data: task });
+  } catch (error) {
+    res.status(500).json({ status: 'error', message: 'Server error' });
+  }
+};
+
+export const updateTask = async (req, res) => {
+  try {
+    const { title, description, dueDate, priority, category, status } =
+      req.body;
+
+    if (!title || !dueDate || !priority || !status) {
+      res.status(400).json({ error: 'All fields are required' });
+    }
+    const id = req.params.id;
+    const userId = req.user.id;
+    const task = await Task.findOneAndUpdate(
+      {
+        _id: id,
+        user: userId,
+      },
+      {
+        title,
+        description,
+        dueDate,
+        priority,
+        category,
+        status,
+      },
+      { new: true, runValidators: true },
+    );
+    if (!task) {
+      return res
+        .status(404)
+        .json({ status: 'error', message: 'Task not found' });
+    }
+    res.json({ status: 'success', data: task });
+  } catch (error) {
+    res.status(400).json({ status: 'error', message: error.message });
+  }
+};
