@@ -76,3 +76,29 @@ export const filterTasks = async (req, res) => {
     return res.status(500).json({ error: 'Internal server error' });
   }
 };
+
+
+// Get all tasks based on ROle 
+
+export const getAllTasks = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const userRole = req.user.role;
+
+    let tasks;
+
+    if (userRole === 'admin') {
+      tasks = await Task.find();
+    } else {
+      tasks = await Task.find({ user: userId });
+    }
+
+    return res.status(200).json({
+      message: 'Tasks retrieved successfully',
+      retrievedTasks: tasks,
+    });
+  } catch (err) {
+    console.error(`Get All Tasks Error: ${err}`);
+    return res.status(500).json({ error: 'Internal server error' });
+  }
+};
