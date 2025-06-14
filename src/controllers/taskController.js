@@ -25,3 +25,19 @@ export const createTask = async (req, res) => {
 }
 
 
+
+export const deleteTask = async (req, res) => {
+    try {
+        const { id } = req.body;
+        const token = req.headers['authorization']?.split(' ')[1];
+        const creatorId = jwt.decode(token).sub;
+
+        await Task.findOneAndDelete({ _id: id, user: creatorId });
+        return res.status(200).json({ messgae: `Task with id ${id} deleted successfully` });
+    }
+    catch (err) {
+
+        console.error(`Delete Task Error: ${err}`);
+        return res.status(500).json({ error: 'Internal server error' });
+    }
+}
