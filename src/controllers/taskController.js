@@ -41,3 +41,27 @@ export const deleteTask = async (req, res) => {
         return res.status(500).json({ error: 'Internal server error' });
     }
 }
+
+export const filterTasks = async (req, res) => {
+    try {
+        const { limit = 10, skip = 0, category, priority, status } = req.query;
+
+        const token = req.headers['authorization']?.split(' ')[1];
+        const userID = jwt.decode(token).sub;
+
+        const query = { user: userID };
+        if (category) { query.category = category; }
+        if (priority) { query.priority = priority; }
+        if (status) { query.status = status; }
+
+        const tasks = await Task.find(query).limit(limit).skip(skip);
+        res.body = tasks;
+        console.log(query);
+        return res.status(200).json({ message: "Tasks retrieved successfully", retrievedTasks: tasks });
+    }
+    catch (err) {
+
+        console.error(`Filter Tasks Error: ${err}`);
+        return res.status(500).json({ error: 'Internal server error' });
+    }
+}
