@@ -42,13 +42,12 @@ A lightweight Node.js REST API for managing tasks — including creating, retrie
 The API will run at <http://localhost:8000>
 
 ## 📦 API Endpoints
+| Method | Endpoint     | Description       |
+| :----: | :----------- | :---------------- |
+|   GET  | `/api/tasks?category&priority=Medium&status=Pending&limit=10&skip=0`| Filter tasks    |
+|  POST  | `/tasks `| Create a new task |
+| DELETE | `/tasks` | Delete a task     |
 
-Method Endpoint Description
-GET /tasks List all tasks
-POST /tasks Create a new task
-GET /tasks/:id Get a task by ID
-PATCH /tasks/:id Update task
-DELETE /tasks/:id Delete a task
 
 ## 🧩 Project Structure
 
