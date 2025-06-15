@@ -4,7 +4,11 @@ import User from '../models/User.js';
 import { sendEmail } from './sendEmail.js';
 
 // Runs every 10 minutes
-cron.schedule('*/10 * * * *', async () => {
+// cron.schedule('*/10 * * * *', async () => {
+
+
+// Runs every 10 minutes
+cron.schedule('*/1 * * * *', async () => {
   const now = new Date();
   const oneHourLater = new Date(now.getTime() + 60 * 60 * 1000);
 
