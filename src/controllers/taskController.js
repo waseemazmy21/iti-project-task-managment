@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import Task from '../models/Task.js'
+import Task from '../models/Task.js';
 
 export const createTask = async (req, res) => {
   try {
@@ -158,3 +158,47 @@ export const updateTask = async (req, res) => {
     res.status(400).json({ status: 'error', message: error.message });
   }
 };
+
+export async function searchTasks(req, res) {
+  try {
+    const queryParams = req.query;
+
+    const limit = +queryParams.limit || 10;
+    const page = +queryParams.page || 1;
+    const skip = (page - 1) * limit;
+
+    const filterbleFields = new Map([
+      ['title', (val) => val.toLowerCase()],
+      ['description', (val) => val.toLowerCase()],
+      ['category', (val) => val.toLowerCase()],
+    ]);
+
+    const filter = {};
+
+    filterbleFields.forEach((transformFun, key) => {
+      if (queryParams[key]) {
+        filter[key] = transformFun(queryParams[key]);
+      }
+    });
+
+    if (req.user.role.toLowerCase() != 'admin' && req.body.user)
+      filter.user = req.user.id;
+
+    const sortBy = queryParams.sortBy || 'createdAt';
+    const order = queryParams.order === 'asc' ? 1 : -1;
+
+    const tasks = await Task.find(filter)
+      .limit(limit)
+      .skip(skip)
+      .sort({ [sortBy]: order });
+
+    res.status(201).json({
+      status: 'success',
+      message: 'get Tasks successfully',
+      data: tasks,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ status: 'error', message: 'Internal server error' });
+  }
+}

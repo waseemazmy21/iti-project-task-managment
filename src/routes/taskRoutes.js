@@ -6,6 +6,7 @@ import {
   getAllTasks,
   updateTask,
   getTaskById,
+  searchTasks,
 } from '../controllers/taskController.js';
 import { protect } from '../middlewares/authMiddleware.js';
 
@@ -20,6 +21,7 @@ router.delete('/:id', deleteTask);
 router.get('/all', getAllTasks);
 router.get('/:id', getTaskById);
 router.put('/:id', updateTask);
-// router.patch('/:id', modify);
 
+//search
+router.get('/search', searchTasks);
 export default router;

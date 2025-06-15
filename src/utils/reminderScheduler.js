@@ -1,6 +1,5 @@
 import cron from 'node-cron';
 import Task from '../models/Task.js';
-import User from '../models/User.js';
 import { sendEmail } from './sendEmail.js';
 
 // Runs every 10 minutes
