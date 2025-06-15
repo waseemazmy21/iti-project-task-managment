@@ -5,7 +5,7 @@ const taskSchema = new Schema(
     title: {
       type: String,
       required: true,
-      index: true
+      index: true,
     },
     description: {
       type: String,
@@ -47,4 +47,5 @@ const taskSchema = new Schema(
   },
 );
 
-export default model('Task', taskSchema);
+const Task = model('Task', taskSchema);
+export default Task;

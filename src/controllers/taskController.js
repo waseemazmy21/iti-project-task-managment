@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import Task from '../models/Task.js';
+import Task from '../models/Task.js'
 
 export const createTask = async (req, res) => {
   try {
