@@ -35,6 +35,12 @@ const taskSchema = new Schema(
       ref: 'User',
       required: true,
     },
+    //to check if the email reminder has been sent
+    // This field can be used to prevent sending multiple reminders for the same task
+    reminderSent: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     timestamps: true,

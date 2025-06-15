@@ -3,6 +3,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import connectDB from './config/db.js';
 import authRoutes from './routes/authRoutes.js';
+import './utils/reminderScheduler.js';
 import taskRoutes from './routes/taskRoutes.js';
 import passport from './config/passport.js';
 
