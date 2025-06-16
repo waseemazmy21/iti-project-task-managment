@@ -3,16 +3,17 @@ import Task from '../models/Task.js';
 import { sendEmail } from './sendEmail.js';
 
 // Runs every 10 minutes
-cron.schedule('*/10 * * * *', async () => {
+cron.schedule('*/1 * * * *', async () => {
+  console.log('node mailller schedule');
   const now = new Date();
   const oneHourLater = new Date(now.getTime() + 60 * 60 * 1000);
 
-  // Find tasks due in the next hour, not completed, and not reminded
   const tasks = await Task.find({
-    dueDate: { $gte: now, $lte: oneHourLater },
     status: { $ne: 'Completed' },
     reminderSent: false,
   }).populate('user');
+
+  console.log(tasks);
 
   for (const task of tasks) {
     if (task.user && task.user.email) {
